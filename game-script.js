@@ -4,27 +4,50 @@ playGame();
  * Play five rounds, report winner/loser at the end.
  */
 function playGame() {
-    // TODO
-    console.log("Welcome to Rock Paper Scissors");
+    let playerScore = 0;
+    let computerScore = 0; 
+
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt(`Game ${i}/5. Enter Selection: `)
+        let computerSelection = getComputerChoice()
+        let result = playRound(playerSelection, computerSelection)
+        if (result == "win") {
+            playerScore ++;
+        } else if (result == "lose") {
+            computerScore ++;
+        }
+    }
+
+    if (playerScore > computerScore) {
+        alert(`Congratulations! You've won! Your score: ${playerScore}. Computer score: ${computerScore}`)
+    } else if (computerScore > playerScore) {
+        alert(`Sorry. You lost. Your score: ${playerScore}. Computer score: ${computerScore}`)
+    } else {
+        alert(`It's a tie! Your score: ${playerScore}. Computer score: ${computerScore}`)
+    }
+
 }
 
 /**
- * Plays single round of rock paper scissors
+ * Plays single round of rock paper scissors, prints result message
  * @param {*} playerSelection player's choice
  * @param {*} computerSelection computer's choice
- * @returns result message
+ * @returns result
  */
 function playRound(playerSelection, computerSelection) {
-    let playerSelLower = playerSelection.toLowerCase();
+    let playerSelLower = (playerSelection ?? "").toLowerCase();
     let computerSelLower = computerSelection.toLowerCase();
 
     if (playerSelLower === computerSelLower) {
-        return "Tie!";
+        alert("You Tied!");
+        return "tie";
     }
     if (beats(playerSelLower, computerSelLower)) {
-        return `You Win! ${playerSelection} beats ${computerSelection}`;
+        alert(`You Win! ${playerSelection} beats ${computerSelection}`);
+        return "win";
     } 
-    return `You Lose! ${computerSelection} beats ${playerSelection}`;
+    alert(`You Lose! ${computerSelection} beats ${playerSelection}`);
+    return "lose";
 }
 
 function beats(selection1, selection2) {
