@@ -1,8 +1,11 @@
-playGame();
 
+let buttonContainer = document.querySelector(".button-container");
+
+buttonContainer.addEventListener("click", playRound);
 /**
+ playGame();
+
  * Play five rounds, report winner/loser at the end.
- */
 function playGame() {
     let playerScore = 0;
     let computerScore = 0; 
@@ -18,13 +21,14 @@ function playGame() {
     }
     alertResults(playerScore, computerScore);
 }
+ */
 
 /**
  * Play a single round of rock paper scissors. Return result of round
  * @returns "tie", "win", or "lose"
  */
-function playRound(roundNumber){
-    let playerSelection = prompt(`Game ${roundNumber}/5. Enter Selection: `);
+function playRound(event){
+    let playerSelection = event.target.textContent;
     let computerSelection = getComputerChoice();
     return judgeSelections(playerSelection, computerSelection);
 }
