@@ -1,11 +1,14 @@
+let gameStatus = document.querySelector(".game-status");
 let buttonContainer = document.querySelector(".button-container");
 let roundResults = document.querySelector(".round-results");
 let playerScoreText = document.querySelector(".player-score");
 let computerScoreText = document.querySelector(".computer-score");
 
+const TOTAL_GAMES = 5;
+
 let playerScore = 0;
 let computerScore = 0; 
-let numRounds = 0;
+let roundNumber = 1;
 
 buttonContainer.addEventListener("click", playRound);
 
@@ -38,12 +41,32 @@ function playRound(event){
     let playerSelection = event.target.textContent;
     let computerSelection = getComputerChoice();
     judgeSelections(playerSelection, computerSelection);
+    roundNumber++;
     updateScoreboard();
+
+
 }
 
 function updateScoreboard() {
     playerScoreText.textContent = `Player: ${playerScore} pts`;
     computerScoreText.textContent = `Computer: ${computerScore} pts`;
+    
+    if (roundNumber <= 5) {
+        gameStatus.textContent = `Game ${roundNumber} / ${TOTAL_GAMES}`;
+    } else {
+        endGame();
+    }
+}
+
+function endGame() {
+    if (playerScore > computerScore) {
+        gameStatus.textContent = "Congrats! You won!";
+    } else if (playerScore < computerScore) {
+        gameStatus.textContent = "Sorry, you lost.";
+    } else {
+        gameStatus.textContent = "It's a tie!";
+    }
+    buttonContainer.removeEventListener("click", playRound);
 }
 
 /**
