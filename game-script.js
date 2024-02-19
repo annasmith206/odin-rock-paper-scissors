@@ -1,7 +1,14 @@
-
 let buttonContainer = document.querySelector(".button-container");
+let roundResults = document.querySelector(".round-results");
+let playerScoreText = document.querySelector(".player-score");
+let computerScoreText = document.querySelector(".computer-score");
+
+let playerScore = 0;
+let computerScore = 0; 
+let numRounds = 0;
 
 buttonContainer.addEventListener("click", playRound);
+
 /**
  playGame();
 
@@ -30,7 +37,13 @@ function playGame() {
 function playRound(event){
     let playerSelection = event.target.textContent;
     let computerSelection = getComputerChoice();
-    return judgeSelections(playerSelection, computerSelection);
+    judgeSelections(playerSelection, computerSelection);
+    updateScoreboard();
+}
+
+function updateScoreboard() {
+    playerScoreText.textContent = `Player: ${playerScore} pts`;
+    computerScoreText.textContent = `Computer: ${computerScore} pts`;
 }
 
 /**
@@ -44,15 +57,14 @@ function judgeSelections(playerSelection, computerSelection) {
     let computerSelLower = computerSelection.toLowerCase();
 
     if (playerSelLower === computerSelLower) {
-        alert("You Tied!");
-        return "tie";
-    }
-    if (beats(playerSelLower, computerSelLower)) {
-        alert(`You Win! ${playerSelection} beats ${computerSelection}`);
-        return "win";
+        roundResults.textContent = "You Tied!";
+    } else if (beats(playerSelLower, computerSelLower)) {
+        roundResults.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
+        playerScore++;
+    } else {
+        roundResults.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        computerScore++;
     } 
-    alert(`You Lose! ${computerSelection} beats ${playerSelection}`);
-    return "lose";
 }
 
 /**
